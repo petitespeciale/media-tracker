@@ -1,0 +1,90 @@
+
+> media_tracker@0.1.0 dev
+> next dev -H 0.0.0.0
+
+   ▲ Next.js 16.0.3 (Turbopack)
+   - Local:         http://localhost:3000
+   - Network:       http://0.0.0.0:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 1171ms
+ ⚠ Cross origin request detected from 10.0.0.11 to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+ GET / 200 in 1137ms (compile: 781ms, render: 356ms)
+ GET / 200 in 2.0s (compile: 1692ms, render: 320ms)
+ GET / 200 in 136ms (compile: 3ms, render: 133ms)
+ ⨯ upstream image response failed for https://image.tmdb.org/w300/KyUrz3GA1FML3XnKkY795XxDxN.jpg 404
+ ⨯ upstream image response failed for https://image.tmdb.org/w300/g4JtvGlQO7DByTI6frUobqvSL3R.jpg 404
+ ⨯ upstream image response failed for https://image.tmdb.org/w300/pBwYsQaSTgnPphIy02DJjCF2cqs.jpg 404
+ ⨯ upstream image response failed for https://image.tmdb.org/w300/g4JtvGlQO7DByTI6frUobqvSL3R.jpg 404
+ ⨯ upstream image response failed for https://image.tmdb.org/w300/pBwYsQaSTgnPphIy02DJjCF2cqs.jpg 404
+ ⨯ upstream image response failed for https://image.tmdb.org/w300/g4JtvGlQO7DByTI6frUobqvSL3R.jpg 404
+ ⨯ upstream image response failed for https://image.tmdb.org/w300/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg 404
+ ⨯ upstream image response failed for https://image.tmdb.org/w300/pBwYsQaSTgnPphIy02DJjCF2cqs.jpg 404
+ ⨯ upstream image response failed for https://image.tmdb.org/w300/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg 404
+ ⨯ upstream image response failed for https://image.tmdb.org/w300/g4JtvGlQO7DByTI6frUobqvSL3R.jpg 404
+ ⨯ upstream image response failed for https://image.tmdb.org/w300/KyUrz3GA1FML3XnKkY795XxDxN.jpg 404
+   Reload env: .env.local
+ ✓ Compiled in 375ms
+ GET / 200 in 294ms (compile: 232ms, render: 62ms)
+ GET / 200 in 281ms (compile: 128ms, render: 153ms)
+ GET / 200 in 137ms (compile: 4ms, render: 133ms)
+Failed to fetch from TMDB: Error: TMDB API Error: 401 Unauthorized
+    at fetchTMDB (lib/tmdb.ts:22:19)
+    at async DetailsPage (app/[type]/[id]/page.tsx:19:18)
+  20 |         const res = await fetch(url);
+  21 |         if (!res.ok) {
+> 22 |             throw new Error(`TMDB API Error: ${res.status} ${res.statusText}`);
+     |                   ^
+  23 |         }
+  24 |         return await res.json();
+  25 |     } catch (error) {
+Failed to fetch from TMDB: Error: TMDB API Error: 401 Unauthorized
+    at fetchTMDB (lib/tmdb.ts:22:19)
+    at async DetailsPage (app/[type]/[id]/page.tsx:20:27)
+  20 |         const res = await fetch(url);
+  21 |         if (!res.ok) {
+> 22 |             throw new Error(`TMDB API Error: ${res.status} ${res.statusText}`);
+     |                   ^
+  23 |         }
+  24 |         return await res.json();
+  25 |     } catch (error) {
+ GET /movie/1904 200 in 2.4s (compile: 2.1s, render: 359ms)
+ GET / 200 in 37ms (compile: 22ms, render: 14ms)
+ GET / 200 in 164ms (compile: 60ms, render: 104ms)
+ ⨯ upstream image response failed for https://image.tmdb.org/w300/pBwYsQaSTgnPphIy02DJjCF2cqs.jpg 404
+ ⨯ upstream image response failed for https://image.tmdb.org/w300/KyUrz3GA1FML3XnKkY795XxDxN.jpg 404
+ ⨯ upstream image response failed for https://image.tmdb.org/w300/g4JtvGlQO7DByTI6frUobqvSL3R.jpg 404
+ GET / 200 in 34ms (compile: 11ms, render: 23ms)
+Failed to fetch from TMDB: Error: TMDB API Error: 401 Unauthorized
+    at fetchTMDB (lib/tmdb.ts:22:19)
+    at async DetailsPage (app/[type]/[id]/page.tsx:19:18)
+  20 |         const res = await fetch(url);
+  21 |         if (!res.ok) {
+> 22 |             throw new Error(`TMDB API Error: ${res.status} ${res.statusText}`);
+     |                   ^
+  23 |         }
+  24 |         return await res.json();
+  25 |     } catch (error) {
+Failed to fetch from TMDB: Error: TMDB API Error: 401 Unauthorized
+    at fetchTMDB (lib/tmdb.ts:22:19)
+    at async DetailsPage (app/[type]/[id]/page.tsx:20:27)
+  20 |         const res = await fetch(url);
+  21 |         if (!res.ok) {
+> 22 |             throw new Error(`TMDB API Error: ${res.status} ${res.statusText}`);
+     |                   ^
+  23 |         }
+  24 |         return await res.json();
+  25 |     } catch (error) {
+ GET /movie/1062722 200 in 321ms (compile: 7ms, render: 314ms)
+   Reload env: .env.local
+ ✓ Compiled in 265ms
+ ✓ Compiled in 0ms
+ GET / 200 in 203ms (compile: 117ms, render: 86ms)
+ GET / 200 in 261ms (compile: 190ms, render: 71ms)
+ GET / 200 in 87ms (compile: 8ms, render: 79ms)
+ GET / 200 in 53ms (compile: 2ms, render: 51ms)
+ GET / 200 in 25ms (compile: 11ms, render: 14ms)
+ GET / 200 in 26ms (compile: 1922µs, render: 24ms)
+[?25h
