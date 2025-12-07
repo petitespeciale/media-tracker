@@ -60,7 +60,8 @@ export default function RootLayout({
               {children}
             </main>
             <footer className="py-6 text-center text-xs text-muted-foreground">
-              2025 © vibe coded by carmille lim
+              <p>2025 © vibe coded by carmille lim</p>
+              <p className="mt-2">Powered by TMDB API • This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
             </footer>
             <BottomNav />
           </StoreProvider>
