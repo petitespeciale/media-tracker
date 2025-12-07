@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Loader2 } from "lucide-react";
+import { Loader2, MailCheck } from "lucide-react";
 
 export default function SignUpPage() {
     const [email, setEmail] = useState("");
@@ -12,6 +12,7 @@ export default function SignUpPage() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [success, setSuccess] = useState(false);
     const { signUp } = useAuth();
     const router = useRouter();
 
@@ -31,15 +32,48 @@ export default function SignUpPage() {
 
         setLoading(true);
 
-        const { error } = await signUp(email, password);
+        const { data, error } = await signUp(email, password);
 
         if (error) {
             setError(error.message);
             setLoading(false);
+        } else if (data && !data.session) {
+            // User created but no session -> Email confirmation required
+            setSuccess(true);
+            setLoading(false);
         } else {
+            // User created and session exists -> Auto login (if email confirm is off)
             router.push("/");
         }
     };
+
+    if (success) {
+        return (
+            <main className="flex min-h-screen flex-col items-center justify-center p-4">
+                <div className="w-full max-w-md space-y-8 text-center">
+                    <div className="flex justify-center">
+                        <div className="h-20 w-20 rounded-full bg-green-500/10 flex items-center justify-center text-green-500">
+                            <MailCheck className="h-10 w-10" />
+                        </div>
+                    </div>
+                    <div>
+                        <h1 className="text-3xl font-bold mb-2">Check your email</h1>
+                        <p className="text-muted-foreground">
+                            We've sent a confirmation link to <span className="font-medium text-foreground">{email}</span>.
+                        </p>
+                        <p className="text-sm text-muted-foreground mt-2">
+                            Please click the link to verify your account and start tracking.
+                        </p>
+                    </div>
+                    <div className="pt-4">
+                        <Link href="/login" className="text-primary hover:underline font-medium">
+                            Return to Sign In
+                        </Link>
+                    </div>
+                </div>
+            </main>
+        );
+    }
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-center p-4">
