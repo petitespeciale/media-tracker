@@ -1,7 +1,7 @@
 "use client";
 
 import { Search, Loader2 } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useState, useTransition, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { searchMulti, TMDB_IMAGE_BASE_URL } from "@/lib/tmdb";
@@ -11,6 +11,7 @@ import Link from "next/link";
 export function SearchBar({ className, placeholder = "Search movies & TV shows..." }: { className?: string, placeholder?: string }) {
     const router = useRouter();
     const searchParams = useSearchParams();
+    const pathname = usePathname();
     const [query, setQuery] = useState(searchParams.get("q") || "");
     const [results, setResults] = useState<any[]>([]);
     const [isOpen, setIsOpen] = useState(false);
@@ -21,9 +22,11 @@ export function SearchBar({ className, placeholder = "Search movies & TV shows..
     // Debounce search
     useEffect(() => {
         const timer = setTimeout(async () => {
-            if (query.trim().length > 1) {
+            if (query.trim().length > 0) {
                 setIsLoading(true);
                 console.log(`[SearchBar] Searching for: "${query}"`);
+                
+                // 1. Fetch dropdown results
                 try {
                     const data = await searchMulti(query);
                     console.log(`[SearchBar] Results:`, data);
@@ -34,15 +37,30 @@ export function SearchBar({ className, placeholder = "Search movies & TV shows..
                 } catch (error) {
                     console.error("[SearchBar] Search failed:", error);
                 }
+
+                // 2. Live Search: Update URL if already on search page
+                if (pathname === "/search") {
+                    startTransition(() => {
+                        router.replace(`/search?q=${encodeURIComponent(query)}`, { scroll: false });
+                    });
+                }
+
                 setIsLoading(false);
             } else {
                 setResults([]);
                 setIsOpen(false);
+                
+                // Clear search results if query is empty on search page
+                if (pathname === "/search" && query === "") {
+                     startTransition(() => {
+                        router.replace(`/search`, { scroll: false });
+                    });
+                }
             }
         }, 300);
 
         return () => clearTimeout(timer);
-    }, [query]);
+    }, [query, pathname, router]);
 
     // Close dropdown when clicking outside
     useEffect(() => {
@@ -73,7 +91,9 @@ export function SearchBar({ className, placeholder = "Search movies & TV shows..
                     type="text"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    onFocus={() => setIsOpen(true)}
+                    onFocus={() => {
+                        if (results.length > 0) setIsOpen(true);
+                    }}
                     placeholder={placeholder}
                     className="h-12 w-full bg-transparent pl-11 pr-4 text-lg outline-none placeholder:text-muted-foreground"
                 />
@@ -84,7 +104,7 @@ export function SearchBar({ className, placeholder = "Search movies & TV shows..
 
             {/* Live Results Dropdown */}
             {isOpen && results.length > 0 && (
-                <div className="absolute top-full mt-2 w-full overflow-hidden rounded-xl border border-border bg-card/95 shadow-2xl backdrop-blur-xl z-50">
+                <div className="absolute top-full mt-2 w-full overflow-hidden rounded-xl border border-border bg-card/95 shadow-2xl backdrop-blur-xl z-[100]">
                     {results.map((item) => (
                         <Link
                             key={item.id}
