@@ -37,6 +37,13 @@ export default async function DetailsPage({
     // Get US streaming providers
     const usProviders = providersData?.results?.US;
 
+    // Extract Crew & Studios
+    const directors = data.credits?.crew?.filter((p: any) => p.job === "Director") || [];
+    const writers = data.credits?.crew?.filter((p: any) => ["Screenplay", "Writer", "Story"].includes(p.job)) || [];
+    const producers = data.credits?.crew?.filter((p: any) => p.job === "Producer") || [];
+    const studios = data.production_companies || [];
+    const creators = data.created_by || [];
+
     return (
         <main className="min-h-screen pb-24 bg-background text-foreground overflow-x-hidden">
             {/* Hero Section */}
@@ -208,6 +215,60 @@ export default async function DetailsPage({
                                 </p>
                             </div>
                         )}
+
+                        {/* Crew & Studios */}
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 text-sm">
+                            {/* Directors / Creators */}
+                            {(directors.length > 0 || creators.length > 0) && (
+                                <div>
+                                    <span className="font-semibold text-muted-foreground block mb-1">
+                                        {type === 'tv' && creators.length > 0 ? "Created By" : "Director(s)"}
+                                    </span>
+                                    <div className="flex flex-wrap gap-2">
+                                        {(type === 'tv' && creators.length > 0 ? creators : directors).map((person: any) => (
+                                            <span key={person.id} className="text-foreground">{person.name}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Writers */}
+                            {writers.length > 0 && (
+                                <div>
+                                    <span className="font-semibold text-muted-foreground block mb-1">Writer(s)</span>
+                                    <div className="flex flex-wrap gap-2">
+                                        {writers.map((person: any) => (
+                                            <span key={person.id} className="text-foreground">{person.name}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Producers */}
+                            {producers.length > 0 && (
+                                <div>
+                                    <span className="font-semibold text-muted-foreground block mb-1">Producer(s)</span>
+                                    <div className="flex flex-wrap gap-2">
+                                        {producers.slice(0, 3).map((person: any) => (
+                                            <span key={person.id} className="text-foreground">{person.name}</span>
+                                        ))}
+                                        {producers.length > 3 && <span className="text-muted-foreground">+{producers.length - 3} more</span>}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Studios */}
+                            {studios.length > 0 && (
+                                <div>
+                                    <span className="font-semibold text-muted-foreground block mb-1">Studio(s)</span>
+                                    <div className="flex flex-wrap gap-2">
+                                        {studios.map((company: any) => (
+                                            <span key={company.id} className="text-foreground">{company.name}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
 
                         {/* Cast */}
                         {data.credits?.cast?.length > 0 && (
