@@ -65,12 +65,19 @@ export default function RootLayout({
                 <a href="/privacy" className="hover:underline">Privacy Policy</a> • <a href="/terms" className="hover:underline">Terms of Service</a>
               </p>
               <div className="mt-2 flex items-center justify-center gap-2">
-                <img
-                  src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg"
-                  alt="TMDB Logo"
-                  className="h-4 w-auto"
-                />
-                <span>Powered by TMDB API • This product uses the TMDB API but is not endorsed or certified by TMDB.</span>
+                <a
+                  href="https://www.themoviedb.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+                >
+                  <img
+                    src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg"
+                    alt="TMDB Logo"
+                    className="h-4 w-auto"
+                  />
+                  <span>Powered by TMDB API • This product uses the TMDB API but is not endorsed or certified by TMDB.</span>
+                </a>
               </div>
             </footer>
             <BottomNav />
