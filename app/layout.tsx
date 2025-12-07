@@ -81,7 +81,7 @@ export default function RootLayout({
                     alt="TMDB Logo"
                     className="h-4 w-auto"
                   />
-                  <span>Powered by TMDB API • This product uses the TMDB API but is not endorsed or certified by TMDB.</span>
+                  <span className="text-[10px]">Powered by TMDB API • This product uses the TMDB API but is not endorsed or certified by TMDB.</span>
                 </a>
               </div>
             </footer>
