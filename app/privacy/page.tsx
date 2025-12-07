@@ -20,9 +20,10 @@ export default function PrivacyPolicy() {
                 <h3 className="text-xl font-medium">Personal Information You Provide</h3>
                 <p>When you register for an account, we collect:</p>
                 <ul className="list-disc pl-6 space-y-2">
-                    <li><strong>Email address</strong> - Used for account creation, authentication, and communication</li>
+                    <li><strong>Email address</strong> - Used for account creation, authentication, email verification, and communication</li>
                     <li><strong>Password</strong> - Encrypted and stored securely through Supabase authentication</li>
                     <li><strong>Profile information</strong> - Any optional profile details you choose to provide</li>
+                    <li><strong>Email verification status</strong> - Whether your email address has been confirmed</li>
                 </ul>
 
                 <h3 className="text-xl font-medium mt-6">Usage Data</h3>
@@ -50,8 +51,8 @@ export default function PrivacyPolicy() {
                 <ul className="list-disc pl-6 space-y-2">
                     <li><strong>Provide and maintain the Service</strong> - Enable account access and data synchronization</li>
                     <li><strong>Improve user experience</strong> - Optimize app performance and add new features</li>
-                    <li><strong>Communicate with you</strong> - Send account-related notifications and updates</li>
-                    <li><strong>Ensure security</strong> - Detect and prevent fraudulent activity or abuse</li>
+                    <li><strong>Communicate with you</strong> - Send account-related notifications, email verification, password resets, and service updates</li>
+                    <li><strong>Ensure security</strong> - Detect and prevent fraudulent activity or abuse, verify account ownership</li>
                     <li><strong>Comply with legal obligations</strong> - Respond to legal requests when required</li>
                 </ul>
             </section>
