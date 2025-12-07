@@ -76,7 +76,7 @@ export default async function DetailsPage({
                         {data.vote_average && (
                             <span className="flex items-center text-yellow-500">
                                 <Star className="mr-1 h-4 w-4 fill-current" />
-                                {data.vote_average.toFixed(1)}
+                                TMDB rating: {data.vote_average.toFixed(1)}
                             </span>
                         )}
                     </div>
@@ -133,16 +133,16 @@ export default async function DetailsPage({
                                     {new Date(releaseDate).getFullYear()}
                                 </div>
                             )}
-                            {data.vote_average > 0 && (
-                                <div className="flex items-center gap-1">
-                                    <Star className="h-4 w-4 text-yellow-500" />
-                                    {data.vote_average.toFixed(1)}
-                                </div>
-                            )}
                             {data.runtime > 0 && (
                                 <div className="flex items-center gap-1">
                                     <Clock className="h-4 w-4" />
                                     {Math.floor(data.runtime / 60)}h {data.runtime % 60}m
+                                </div>
+                            )}
+                            {data.vote_average > 0 && (
+                                <div className="flex items-center gap-1">
+                                    <Star className="h-4 w-4 text-yellow-500" />
+                                    TMDB rating: {data.vote_average.toFixed(1)}
                                 </div>
                             )}
                         </div>
