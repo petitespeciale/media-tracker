@@ -12,10 +12,17 @@ export default function AccountPage() {
     const { items, removeItem } = useStore();
     const router = useRouter();
     const [isDeleting, setIsDeleting] = useState(false);
+    const [storageUsage, setStorageUsage] = useState<string>("0 MB");
 
     useEffect(() => {
         if (!user) {
             router.push("/login");
+        }
+
+        // Calculate storage usage
+        if (typeof window !== 'undefined') {
+            const usage = (JSON.stringify(localStorage).length / 1024 / 1024).toFixed(2);
+            setStorageUsage(`${usage} MB`);
         }
     }, [user, router]);
 
@@ -119,6 +126,12 @@ export default function AccountPage() {
                         </button>
                         <p className="mt-2 text-center text-xs text-muted-foreground">
                             This will permanently delete all your tracked data.
+                        </p>
+                    </div>
+
+                    <div className="pt-4 border-t border-border text-center">
+                        <p className="text-xs text-muted-foreground">
+                            Local Storage Used: <span className="font-mono text-foreground">{storageUsage}</span>
                         </p>
                     </div>
                 </div>

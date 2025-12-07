@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/context/auth-context";
+import { toast } from "sonner";
 
 export type MediaStatus = "watched" | "watching" | "plan";
 
@@ -53,7 +54,18 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     // Save to localStorage whenever items change
     useEffect(() => {
         if (isLoaded) {
-            localStorage.setItem("media_tracker_items", JSON.stringify(items));
+            try {
+                localStorage.setItem("media_tracker_items", JSON.stringify(items));
+            } catch (error: any) {
+                if (error.name === 'QuotaExceededError' || error.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
+                    toast.error("Storage Limit Reached", {
+                        description: "Your local storage is full. Some data may not be saved locally.",
+                        duration: 5000,
+                    });
+                } else {
+                    console.error("Failed to save to localStorage:", error);
+                }
+            }
         }
     }, [items, isLoaded]);
 

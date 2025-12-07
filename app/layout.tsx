@@ -43,6 +43,10 @@ import { TopNav } from "@/components/top-nav";
 
 // ... imports
 
+import { Toaster } from "sonner";
+
+// ... imports
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -59,6 +63,7 @@ export default function RootLayout({
             <main className="pb-16 md:pb-0">
               {children}
             </main>
+            <Toaster position="top-center" richColors />
             <footer className="py-6 text-center text-xs text-muted-foreground">
               <p>2025 © vibe coded by carmille lim</p>
               <p className="mt-2">
