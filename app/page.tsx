@@ -4,7 +4,7 @@ import { Suspense } from "react";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4 md:p-24">
+    <main className="flex min-h-screen flex-col items-center pt-24 p-4 md:p-24">
       <div className="flex w-full max-w-md md:max-w-7xl flex-col items-center space-y-8 text-center">
         <div className="flex flex-col items-center">
           <h1 className="text-4xl animate-gradient-x leading-none -mb-2">
