@@ -58,3 +58,7 @@ export async function getSeasonDetails(tvId: string, seasonNumber: number) {
 export async function getWatchProviders(type: "movie" | "tv", id: string) {
     return fetchTMDB(`/${type}/${id}/watch/providers`);
 }
+
+export async function getPersonCredits(personId: string) {
+    return fetchTMDB(`/person/${personId}/combined_credits`);
+}

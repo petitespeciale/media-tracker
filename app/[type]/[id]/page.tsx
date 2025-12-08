@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Star, Calendar, Clock } from "lucide-react";
 import { notFound } from "next/navigation";
+import { CastCard } from "@/components/cast-card";
 
 export default async function DetailsPage({
     params,
@@ -276,34 +277,7 @@ export default async function DetailsPage({
                                 <h2 className="mb-4 text-xl font-semibold">Top Cast</h2>
                                 <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
                                     {data.credits.cast.slice(0, 10).map((actor: any) => (
-                                        <a
-                                            key={actor.id}
-                                            href={`https://en.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(actor.name)}`}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="w-24 flex-none space-y-2 transition-transform hover:scale-105"
-                                        >
-                                            <div className="relative h-24 w-24 overflow-hidden rounded-full bg-muted">
-                                                {actor.profile_path ? (
-                                                    <Image
-                                                        src={`${TMDB_IMAGE_BASE_URL}/w185${actor.profile_path}`}
-                                                        alt={actor.name}
-                                                        fill
-                                                        className="object-cover"
-                                                    />
-                                                ) : (
-                                                    <div className="flex h-full w-full items-center justify-center text-xs text-muted-foreground">
-                                                        No Photo
-                                                    </div>
-                                                )}
-                                            </div>
-                                            <div className="text-center text-xs">
-                                                <p className="font-medium line-clamp-1">{actor.name}</p>
-                                                <p className="text-muted-foreground line-clamp-1">
-                                                    {actor.character}
-                                                </p>
-                                            </div>
-                                        </a>
+                                        <CastCard key={actor.id} actor={actor} />
                                     ))}
                                 </div>
                             </section>
