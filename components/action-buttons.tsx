@@ -99,7 +99,8 @@ export function ActionButtons({ item }: { item: MediaItem }) {
                                 type="date"
                                 value={storedItem?.dateWatched?.split('T')[0] || ''}
                                 onChange={(e) => handleDateChange(e.target.value)}
-                                className="bg-transparent text-sm font-medium focus:outline-none text-right"
+                                onClick={(e) => e.currentTarget.showPicker()}
+                                className="bg-background text-sm font-medium focus:outline-none text-right border border-border rounded px-2 py-1 cursor-pointer hover:bg-muted/50"
                             />
                         </div>
                         <div className="flex items-center gap-2 pt-2 border-t border-border/50">
