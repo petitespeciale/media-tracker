@@ -60,10 +60,31 @@ export function CastCard({ actor }: StartProps) {
 
                 const data = await getPersonCredits(actor.id.toString());
                 if (data && data.cast) {
-                    // Sort by popularity and take top 5, excluding current role if possible? 
-                    // API returns combined credits.
-                    const topCredits = data.cast
-                        .sort((a: any, b: any) => b.popularity - a.popularity)
+                    // Filter out Talk Shows (10767), News (10763), and "Self" roles
+                    const filteredCast = data.cast.filter((item: any) => {
+                        // Check genres
+                        if (item.genre_ids?.includes(10767) || item.genre_ids?.includes(10763)) {
+                            return false;
+                        }
+                        // Check character name for "Self" type roles
+                        const char = item.character?.toLowerCase() || "";
+                        const title = (item.title || item.name || "").toLowerCase();
+
+                        // Exclude specific roles
+                        if (["self", "himself", "herself", "guest", "host", "narrator", "archive footage"].some(r => char.includes(r))) {
+                            return false;
+                        }
+
+                        // Double check titles for talk shows if genre is missing (fallback)
+                        if (title.includes("late night") || title.includes("daily show") || title.includes("live with") || title.includes("tonight show")) {
+                            return false;
+                        }
+
+                        return true;
+                    });
+
+                    const topCredits = filteredCast
+                        .sort((a: any, b: any) => b.vote_count - a.vote_count)
                         .slice(0, 5);
                     setCredits(topCredits);
                 }
