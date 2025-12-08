@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { createPortal } from "react-dom";
 import { TMDB_IMAGE_BASE_URL, getPersonCredits } from "@/lib/tmdb";
 import { Loader2 } from "lucide-react";
 
@@ -20,8 +21,24 @@ export function CastCard({ actor }: StartProps) {
     const [loading, setLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [hasFetched, setHasFetched] = useState(false);
+    const [position, setPosition] = useState({ top: 0, left: 0 });
+    const triggerRef = useRef<HTMLDivElement>(null);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const handleMouseEnter = async () => {
+        if (triggerRef.current) {
+            const rect = triggerRef.current.getBoundingClientRect();
+            // Position above the card
+            setPosition({
+                top: rect.top,
+                left: rect.left + (rect.width / 2)
+            });
+        }
+
         setIsOpen(true);
         if (!hasFetched && !loading) {
             setLoading(true);
@@ -65,7 +82,8 @@ export function CastCard({ actor }: StartProps) {
 
     return (
         <div
-            className="relative group"
+            ref={triggerRef}
+            className="relative group cursor-pointer" // cursor-pointer to hint interactivity
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
@@ -97,9 +115,16 @@ export function CastCard({ actor }: StartProps) {
                 </div>
             </Link>
 
-            {/* Simple Hover Card */}
-            {isOpen && (
-                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 rounded-lg bg-popover text-popover-foreground shadow-xl border border-border z-50 animate-in fade-in zoom-in-95 duration-200">
+            {/* Portal Hover Card */}
+            {isOpen && mounted && createPortal(
+                <div
+                    className="fixed z-[9999] mb-2 w-64 p-3 rounded-lg bg-popover text-popover-foreground shadow-xl border border-border animate-in fade-in zoom-in-95 duration-200 pointer-events-none"
+                    style={{
+                        top: position.top,
+                        left: position.left,
+                        transform: "translate(-50%, -100%) translateY(-10px)"
+                    }}
+                >
                     <div className="text-xs font-semibold mb-2 border-b pb-1">Known For</div>
                     {loading ? (
                         <div className="flex justify-center p-2">
@@ -131,9 +156,10 @@ export function CastCard({ actor }: StartProps) {
                     ) : (
                         <div className="text-xs text-muted-foreground text-center">No info available</div>
                     )}
-                    {/* Arrow */}
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-popover" />
-                </div>
+                    {/* Arrow - simplified as a small square rotated */}
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 h-2 w-2 rotate-45 border-r border-b border-border bg-popover" />
+                </div>,
+                document.body
             )}
         </div>
     );
