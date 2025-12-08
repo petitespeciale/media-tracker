@@ -99,11 +99,7 @@ export function ActionButtons({ item }: { item: MediaItem }) {
                                 type="date"
                                 value={storedItem?.dateWatched?.split('T')[0] || ''}
                                 onChange={(e) => handleDateChange(e.target.value)}
-                                disabled={!storedItem?.dateWatched}
-                                className={cn(
-                                    "bg-transparent text-sm font-medium focus:outline-none text-right",
-                                    !storedItem?.dateWatched && "opacity-50 cursor-not-allowed"
-                                )}
+                                className="bg-transparent text-sm font-medium focus:outline-none text-right"
                             />
                         </div>
                         <div className="flex items-center gap-2 pt-2 border-t border-border/50">

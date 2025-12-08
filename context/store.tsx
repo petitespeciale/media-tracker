@@ -207,7 +207,16 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     };
 
     const getItem = (id: number) => items[id];
-    const getWatched = () => Object.values(items).filter((i) => i.status === "watched");
+    const getWatched = () => Object.values(items)
+        .filter((i) => i.status === "watched")
+        .sort((a, b) => {
+            if (a.dateWatched && b.dateWatched) {
+                return new Date(b.dateWatched).getTime() - new Date(a.dateWatched).getTime();
+            }
+            if (a.dateWatched) return -1;
+            if (b.dateWatched) return 1;
+            return 0;
+        });
     const getWatchlist = () => Object.values(items).filter((i) => i.status === "plan");
     const getWatching = () => Object.values(items).filter((i) => i.status === "watching");
 
