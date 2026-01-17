@@ -123,6 +123,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
                     rating: cloudItem.rating,
                     watchedEpisodes: cloudItem.watched_episodes || [],
                     episodeProgress: cloudItem.episode_progress || {},
+                    // Preserve local-only flags if they exist
+                    didNotFinish: items[cloudItem.id]?.didNotFinish,
                 };
             });
 
