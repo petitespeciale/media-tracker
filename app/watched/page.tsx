@@ -56,6 +56,13 @@ export default function WatchedPage() {
                             <span className="text-lg">😞</span>
                             Nope
                         </Link>
+                        <Link
+                            href="/ratings/dnf"
+                            className="flex items-center gap-2 rounded-lg bg-card border border-border px-4 py-2 text-sm font-medium transition-colors hover:bg-muted"
+                        >
+                            <span className="text-lg text-red-500 font-bold">DNF</span>
+                            Did Not Finish
+                        </Link>
                     </div>
                 </header>
 
