@@ -7,8 +7,12 @@ import { useState } from "react";
 
 export function ActionButtons({ item }: { item: MediaItem }) {
     const { updateItem, getItem, removeItem } = useStore();
-    const storedItem = getItem(item.id);
+    const normalizedId = Number(item.id);
+    const storedItem = getItem(normalizedId);
     const status = storedItem?.status;
+
+    // Debugging
+    console.log(`[ActionButtons] Item: ${normalizedId} Status: ${status}`);
 
     // Date picker state
     const [showDatePicker, setShowDatePicker] = useState(false);
@@ -21,8 +25,10 @@ export function ActionButtons({ item }: { item: MediaItem }) {
 
 
     const handleWatched = () => {
+        console.log('[ActionButtons] Setting status to watched');
         updateItem({
             ...item,
+            id: normalizedId,
             status: "watched",
             dateWatched: storedItem?.dateWatched || new Date().toISOString()
         });
@@ -30,20 +36,20 @@ export function ActionButtons({ item }: { item: MediaItem }) {
 
     const handleWatchlist = () => {
         if (status === "plan") {
-            removeItem(item.id);
+            removeItem(normalizedId);
         } else {
-            updateItem({ ...item, status: "plan" });
+            updateItem({ ...item, id: normalizedId, status: "plan" });
         }
     };
 
     const handleWatching = () => {
-        updateItem({ ...item, status: "watching", dateWatched: new Date().toISOString() });
+        updateItem({ ...item, id: normalizedId, status: "watching", dateWatched: new Date().toISOString() });
     };
 
     const handleDateChange = (date: string) => {
         // If the date string is empty, clear the dateWatched field
         const newDate = date ? date : undefined;
-        updateItem({ ...item, status: "watched", dateWatched: newDate });
+        updateItem({ ...item, id: normalizedId, status: "watched", dateWatched: newDate });
         setShowDatePicker(false);
     };
 
@@ -92,9 +98,9 @@ export function ActionButtons({ item }: { item: MediaItem }) {
 
             {status === "watched" && (
                 <>
-                    <div className="space-y-3 rounded-lg border border-border bg-card p-3">
+                    <div className="space-y-3 rounded-lg border-2 border-primary/20 bg-muted/50 p-4">
                         <div className="flex items-center justify-between">
-                            <span className="text-sm text-muted-foreground">Date Watched:</span>
+                            <span className="text-sm font-medium">Date Watched:</span>
                             <input
                                 type="date"
                                 value={storedItem?.dateWatched?.split('T')[0] || ''}
@@ -119,6 +125,18 @@ export function ActionButtons({ item }: { item: MediaItem }) {
                             />
                             <label htmlFor="no-date" className="text-sm text-muted-foreground select-none cursor-pointer">
                                 No specific date
+                            </label>
+                        </div>
+                        <div className="flex items-center gap-2 pt-2 border-t border-border/50">
+                            <input
+                                type="checkbox"
+                                id="did-not-finish"
+                                checked={storedItem?.didNotFinish || false}
+                                onChange={(e) => updateItem({ ...item, id: normalizedId, status: "watched", didNotFinish: e.target.checked })}
+                                className="h-4 w-4 rounded border-primary text-primary focus:ring-primary accent-primary"
+                            />
+                            <label htmlFor="did-not-finish" className="text-sm font-medium text-red-500/80 select-none cursor-pointer">
+                                Did not finish
                             </label>
                         </div>
                     </div>

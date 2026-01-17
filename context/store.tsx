@@ -21,6 +21,7 @@ export interface MediaItem {
     rating?: number;
     watchedEpisodes?: number[];
     episodeProgress?: Record<number, number>;
+    didNotFinish?: boolean;
 }
 
 interface StoreContextType {

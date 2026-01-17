@@ -82,9 +82,16 @@ export default function WatchedPage() {
                                 )}
                             </div>
                             <div className="p-3">
-                                <h3 className="line-clamp-1 text-sm font-medium text-foreground">
-                                    {item.title}
-                                </h3>
+                                <div className="flex items-start justify-between gap-2">
+                                    <h3 className="line-clamp-1 text-sm font-medium text-foreground">
+                                        {item.title}
+                                    </h3>
+                                    {item.didNotFinish && (
+                                        <span className="shrink-0 rounded bg-red-500/10 px-1.5 py-0.5 text-[10px] font-medium text-red-500">
+                                            DNF
+                                        </span>
+                                    )}
+                                </div>
                                 <p className="text-xs text-muted-foreground">
                                     Watched: {item.dateWatched ? new Date(item.dateWatched).toLocaleDateString() : "Unknown"}
                                 </p>
